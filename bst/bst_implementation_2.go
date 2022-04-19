@@ -90,6 +90,15 @@ func (startingNode *TreeNode) findeGreatest() int {
 	return startingNode.value
 }
 
+func (startingNode *TreeNode) inOrderTraversalAndPrint() {
+	if startingNode == nil {
+		return
+	}
+	startingNode.leftChild.inOrderTraversalAndPrint()
+	fmt.Println(startingNode.value)
+	startingNode.rightChild.inOrderTraversalAndPrint()
+}
+
 func main() {
 	// node1 := &TreeNode{value: 10}
 	// node2 := &TreeNode{value: 20}
@@ -110,11 +119,12 @@ func main() {
 	root.insert(95)
 
 	fmt.Println(root.search(95)) // true
-	// fmt.Println(root.search(10)) // true
-	// fmt.Println(root.search(11)) // false
-	// fmt.Println(root.search(15)) // true
-	// fmt.Println(root.search(11)) // true
-	// fmt.Println(root.search(16)) // true
+	fmt.Println(root.search(10)) // true
+	fmt.Println(root.search(11)) // true
+	fmt.Println(root.search(15)) // false
+	fmt.Println(root.search(11)) // true
+	fmt.Println(root.search(16)) // false
 
-	fmt.Println("Greatest", root.findeGreatest())
+	fmt.Println("Greatest", root.findeGreatest())// 95
+	root.inOrderTraversalAndPrint() // 4, 10, 11, 25, 30, 33, 40, 50, 52, 56, 61, 75, 82, 89, 95
 }
