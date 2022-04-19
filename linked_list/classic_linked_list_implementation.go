@@ -86,17 +86,13 @@ func(list *linkedList) delteByIndex(index int) bool {
 	return false
 }
 
-func (list *linkedList) printListElements() bool {
+func (list *linkedList) printListElements() {
   current_node := list.head
-	if current_node == nil {
-		return false
-	}
 
 	for current_node != nil {
 		fmt.Println(current_node.data)
 		current_node = current_node.next_node
 	}
-	return true
 }
 
 func (list *linkedList) getLastElement() (node *node) {
@@ -116,6 +112,31 @@ func (list *linkedList) getLastElement() (node *node) {
 	return nil
 }
 
+func (list *linkedList) reverseList() {
+	current := list.head
+	next := current.next_node
+
+	current.next_node = nil
+
+	prev := current.next_node
+
+	for next != nil {
+		prev = current
+		current = next
+		next = next.next_node
+		current.next_node = prev
+	}
+	list.head = current
+}
+
+func (list *linkedList) deleteNode(deleteNode *node) {
+	if deleteNode.next_node == nil {
+    *deleteNode = node{}
+	} else {
+		*deleteNode = *deleteNode.next_node
+	}
+}
+
 func main() {
 	node5 := &node{data:14}
 	node4 := &node{data:13, next_node: node5}
@@ -126,12 +147,16 @@ func main() {
 	list1 := &linkedList{head: node1}
 	node6 := &node{data:99}
 
-	fmt.Println(list1.printListElements())
+	list1.printListElements() //10, 11, 12, 13, 14
 	fmt.Println("==============")
 
-	fmt.Println(list1.insertAtIndex(0, node6))
-	fmt.Println(list1.printListElements())
+	fmt.Println(list1.insertAtIndex(0, node6)) // true
+	list1.printListElements() //99, 10, 11, 12, 13, 14
 	fmt.Println("==============")
-
-	fmt.Println(list1.getLastElement())
+	
+	fmt.Println(list1.getLastElement()) //&{14 <nil>}
+	list1.reverseList() //14, 13, 12, 11, 10, 99
+  list1.deleteNode(node2)
+  list1.printListElements() //14, 13, 12, 10, 99
+	fmt.Println("==============")
 }
